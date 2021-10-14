@@ -14,7 +14,7 @@ async function addBook(newBook) {
 }
 
 function deleteBook(id) {
- 
+    return db('library').where('book_id', id).del();
 }
 
 module.exports = {

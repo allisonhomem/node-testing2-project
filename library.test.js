@@ -48,7 +48,17 @@ describe('[POST] /api/library', () => {
 })
 
 describe('[DELETE] /api/library/:id', () => {
-  test.todo('[5] deletes book with corresponding id in database')
-  test.todo('[6] responds with success message upon deletion')
-  test.todo('[7] responds with error message if book_id does not exist')
+  test('[5] deletes book with corresponding id in database', async () => {
+    await request(server).delete('/api/library/1')
+    const deleted = await db('library').where('book_id', 1).first()
+    expect(deleted).toBeFalsy()
+  })
+  test('[6] responds with success message upon deletion', async () => {
+    let res = await request(server).delete('/api/library/1')
+    expect(res.body).toHaveProperty('message', 'The book with id: 1 has been deleted from the library')
+  })
+  test('[7] responds with error message if book_id does not exist', async () => {
+    let res = await request(server).delete('/api/library/100')
+    expect(res.body).toHaveProperty('message', 'There is no book in the library with id: 100')
+  })
 })
