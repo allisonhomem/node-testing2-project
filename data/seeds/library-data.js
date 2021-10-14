@@ -13,6 +13,7 @@ const library = [
 
 exports.library = library;
 
-exports.seed = function (knex) {
-    return knex('library').insert(library);
+exports.seed = async function (knex) {
+    await knex('library').truncate();
+    await knex('library').insert(library);
 }
